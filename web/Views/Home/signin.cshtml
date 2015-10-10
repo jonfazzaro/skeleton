@@ -37,7 +37,7 @@
         <div class="form-group row">
             <div class="col-md-6">
                 @Html.LabelFor(m => m.Url, new { @class = "label-control" })
-                @Html.TextBoxFor(m => m.Url, new { @class = "form-control", type = "url", placeholder = "You know, like https://jonfazzaro.visualstudio.com/DefaultCollection or https://my.tfsserver.com/awesomeprojectcollection" })
+                @Html.TextBoxFor(m => m.Url, new { @class = "form-control", type = "url", placeholder = "You know, like https://jonfazzaro.visualstudio.com/DefaultCollection" })
                 @Html.ValidationMessageFor(m => m.Url, null, new { @class = "text-danger"})
                 <small class="help-block"><strong>Sorry/not sorry&mdash;only for visualstudio.com or TFS 2015 right now</strong>. Stay tuned for old-school support. Or <a href="//github.com/jonfazzaro/skeleton" target="_blank">pull request me, bro</a>.</small>
             </div>
