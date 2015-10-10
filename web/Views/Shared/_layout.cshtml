@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="~/img/skull.png" />
     @Styles.Render("~/css")
+    @Html.Partial("_appInsights")
 </head>
 <body>
     @this.RenderSection("header", @<header>
