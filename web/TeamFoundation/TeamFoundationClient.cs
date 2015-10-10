@@ -126,9 +126,5 @@
 
             return (double)i.Fields[FieldNames.Priority];
         }
-
-        Task<IEnumerable<Card>> ICardsClient.GetCards(string projectName) {
-            throw new NotImplementedException();
-        }
     }
 }
