@@ -1,6 +1,7 @@
 ﻿namespace Skeleton.Web.Controllers {
-    using Models;
     using Cards;
+    using Models;
+    using Properties;
     using State;
     using System;
     using System.Threading.Tasks;
@@ -112,7 +113,7 @@
 
         private ActionResult Error(IViewModel model) {
             model.HasError = true;
-            model.ErrorMessage = "Let's try that again.";
+            model.ErrorMessage = Resources.ConnectionErrorMessage;
             return View(model);
         }
     }

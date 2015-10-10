@@ -1,4 +1,6 @@
-﻿@model Skeleton.Web.Models.MapViewModel
+﻿@using Skeleton.Web.Properties
+@model Skeleton.Web.Models.MapViewModel
+    
 
 @section header {
     <header>
@@ -6,7 +8,7 @@
             <h1>
                 <img src="~/img/skeleton.gif" style="display:none;" data-bind="visible: isLoading" width="50" />
                 <img src="~/img/skeleton.png" data-bind="visible: !isLoading()" width="50" />
-                Skeleton
+                @Resources.ApplicationName
                 <small><a target="_blank" href="@Model.BaseUrl/@Model.ProjectName/_backlogs">@Model.ProjectName</a></small>
                 <div class="pull-right">
                     <a class="btn btn-success" data-bind="click: save, visible: isDirty">Save</a>
