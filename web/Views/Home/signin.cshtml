@@ -1,0 +1,82 @@
+﻿@model Skeleton.Web.Models.SignInViewModel
+
+@section header {
+    <br />
+}
+
+<div class="col-md-2 skeleton">
+    <img src="~/img/skeleton.png" />
+</div>
+<div class="col-md-10">
+
+    <div class="row">
+        <div class="lead col-md-6">
+            <h1>Story mapping for TFS.</h1>
+            <p>
+                Did you know? <a href="http://jpattonassociates.com/the-new-backlog/" target="_blank">The new user story backlog is a map</a>.
+            </p>
+            <p>
+                And until our pals on the TFS team <a href="https://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/4130976-create-a-new-view-in-tfs-task-board-to-view-backlo" target="_blank">get around to building one in</a>, <strong>Skeleton</strong>'s got your back.
+            </p>
+            <p>
+                Ready?
+            </p>
+        </div>  
+    </div>
+
+    @using (Html.BeginForm()) {
+        if (Model.HasError) {
+            <div class="form-group">
+                <div class="col-md-4">
+                    <p class="alert alert-danger">
+                        @Model.ErrorMessage
+                    </p>
+                </div>
+            </div>
+        }
+        <div class="form-group row">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Url, new { @class = "label-control" })
+                @Html.TextBoxFor(m => m.Url, new { @class = "form-control", type = "url" })
+                @Html.ValidationMessageFor(m => m.Url, null, new { @class = "text-danger" })
+                <small class="help-block">Enter your Team Foundation Server project collection URL here.</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+
+                @Html.LabelFor(m => m.Username, new { @class = "label-control" })
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Password, new { @class = "label-control" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-lg btn-success">Map Me</button>
+            </div>
+        </div>
+    }
+
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            Loving heaped together by <a href="https://twitter.com/jonfazzaro/" target="_blank">@@jonfazzaro</a>.
+            <small class="help-block">See what I did there? Heaped?
+                <small class="help-block">
+                    <a href="https://msdn.microsoft.com/en-us/library/f144e03t(v=vs.110).aspx" target="_blank">Managed code</a>?
+                    <small class="help-block">I'll see myself out.</small>
+                </small>
+            </small>
+        </div>
+    </div>
+</div>
+

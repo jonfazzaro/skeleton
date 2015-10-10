@@ -1,0 +1,64 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Arial, Verdana;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Segoe UI Light', Tahoma, Arial, Verdana;
+    text-transform: lowercase;
+}
+
+.sortable-ghost {
+    visibility: hidden;
+}
+
+@media(min-width:990px) {
+    .skeleton img {
+        margin-left: -140px;
+    }
+}
+
+#projects form {
+    margin-left: 60px;
+}
+
+td {
+    width: 150px;
+}
+
+.card .panel-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 150px;
+    height: 100px;
+    font-size: 1em;
+}
+
+td {
+    vertical-align: top;
+    padding-right: 15px;
+}
+
+.spin {
+    -webkit-animation: spin .3s linear infinite;
+    -moz-animation: spin .3s linear infinite;
+    animation: spin .3s linear infinite;
+}
+
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

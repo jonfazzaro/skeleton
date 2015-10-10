@@ -1,0 +1,35 @@
+﻿@using Skeleton.Web.Views
+@model Skeleton.Web.Models.IViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.Title / Skeleton</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="~/img/skull.png" />
+    @Styles.Render("~/css")
+</head>
+<body>
+    @this.RenderSection("header", @<header>
+        <section class="container-fluid">
+            <h1>
+                <img src="~/img/skeleton.png" width="50" />
+                Skeleton
+                <small>@Model.Title</small>
+                <div class="pull-right">
+                    <a class="btn" href="~/signout">Sign out</a>
+                </div>
+            </h1>
+            <br />
+        </section>
+    </header>)
+    <article class="container-fluid">
+        @RenderBody()
+    </article>
+    <footer>
+        @Scripts.Render("~/js")
+        @RenderSection("scripts", required: false)
+</footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿@model Skeleton.Web.Models.MapViewModel
+
+@section header {
+    <header>
+        <section class="container-fluid">
+            <h1>
+                <img src="~/img/skeleton.gif" style="display:none;" data-bind="visible: isLoading" width="50" />
+                <img src="~/img/skeleton.png" data-bind="visible: !isLoading()" width="50" />
+                Skeleton
+                <small><a target="_blank" href="@Model.BaseUrl/@Model.ProjectName/_backlogs">@Model.ProjectName</a></small>
+                <div class="pull-right">
+                    <a class="btn btn-success" data-bind="click: save, visible: isDirty">Save</a>
+                    <a class="btn" data-bind="click: load('@Model.ProjectName'), visible: isDirty">Revert</a>
+                    <a class="btn" href="~/projects">Change project</a>
+                    <a class="btn" href="~/signout">Sign out</a>
+                </div>
+            </h1>
+            <br />
+        </section>
+    </header>
+}
+
+<section id="map">
+    <script type="text/html" id="card">
+        <div class="card panel" data-bind="css: 'panel-' + $data.class, attr: { id: card.Id }">
+            <div class="panel-body" data-bind="css: 'bg-' + $data.class, attr: { title: card.Title }">
+                <a target="_blank" data-bind="text: card.Id, attr: { href: ['@Model.BaseUrl/@Model.ProjectName', '_workitems#_a=edit&id='].join('/') + card.Id }"></a>
+                <span data-bind="text: card.Title"></span>
+            </div>
+        </div>
+    </script>
+
+    <table>
+        <tr data-bind="foreach: sort(features(parents(cards()))), sortable: { onUpdate: reindex }">
+            <td class="feature">
+                <div data-bind="template: { name: 'card', data: { card: $data, 'class': 'info' }}"></div>
+                <section data-bind="foreach: $root.stories($root.children($data)), sortable: { onUpdate: $root.reindex }">
+                    <div data-bind="template: { name: 'card', data: { card: $data, 'class': 'warning' }}"></div>
+                </section>
+            </td>
+        </tr>
+    </table>
+</section>
+
+@section scripts {
+    <script>
+        $(function () {
+            var api = new API('@Url.Content("~")');
+            var res = new Resources();
+            var model = new mapViewModel(api, res);
+            ko.applyBindings(model);
+            model.load('@Model.ProjectName');
+        });
+    </script>
+}
