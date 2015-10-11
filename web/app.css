@@ -11,12 +11,6 @@ h1, h2, h3, h4, h5, h6 {
     visibility: hidden;
 }
 
-@media(min-width:990px) {
-    .skeleton img {
-        margin-left: -140px;
-    }
-}
-
 #projects form {
     margin-left: 60px;
 }
@@ -36,29 +30,4 @@ td {
 td {
     vertical-align: top;
     padding-right: 15px;
-}
-
-.spin {
-    -webkit-animation: spin .3s linear infinite;
-    -moz-animation: spin .3s linear infinite;
-    animation: spin .3s linear infinite;
-}
-
-@-moz-keyframes spin {
-    100% {
-        -moz-transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes spin {
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
 }
