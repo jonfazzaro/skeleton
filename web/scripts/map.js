@@ -113,6 +113,6 @@
 
     function saved() {
         self.isDirty(false);
-        toastr.success("Saved!")
+        toastr.success(resources.strings.savedMessage);
     }
 }

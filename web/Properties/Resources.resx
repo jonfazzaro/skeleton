@@ -120,7 +120,60 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Skeleton</value>
   </data>
+  <data name="ChangeProjectButtonCaption" xml:space="preserve">
+    <value>Change Project</value>
+  </data>
+  <data name="ChooseProjectButtonCaption" xml:space="preserve">
+    <value>Walk the skeleton</value>
+  </data>
+  <data name="ChooseProjectPageTitle" xml:space="preserve">
+    <value>Pick your poison</value>
+  </data>
+  <data name="ChoosePrompt" xml:space="preserve">
+    <value>(Choose one)</value>
+  </data>
   <data name="ConnectionErrorMessage" xml:space="preserve">
     <value>Let's try that again.</value>
+  </data>
+  <data name="FooterCopy" xml:space="preserve">
+    <value>Lovingly heaped together by &lt;a href="//twitter.com/jonfazzaro/" target="_blank"&gt;@@jonfazzaro&lt;/a&gt;.</value>
+  </data>
+  <data name="FooterTooltip" xml:space="preserve">
+    <value>See what I did there? Heaped? &amp;#13;&amp;#13;Managed code? &amp;#13;&amp;#13;&amp;#13;&amp;#13;I'll see myself out.</value>
+  </data>
+  <data name="Headline" xml:space="preserve">
+    <value>Story mapping for TFS.</value>
+  </data>
+  <data name="LeadCopy" xml:space="preserve">
+    <value>&lt;p&gt;
+                Did you know? &lt;a href="http://jpattonassociates.com/the-new-backlog/" target="_blank"&gt;The new user story backlog is a map&lt;/a&gt;.
+            &lt;/p&gt;
+            &lt;p&gt;
+                And until our pals on the TFS team &lt;a href="https://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/4130976-create-a-new-view-in-tfs-task-board-to-view-backlo" target="_blank"&gt;get around to building one in&lt;/a&gt;, &lt;strong&gt;Skeleton&lt;/strong&gt;'s got your back.
+            &lt;/p&gt;
+            &lt;p&gt;
+                Ready?
+            &lt;/p&gt;</value>
+  </data>
+  <data name="ProjectCollectionUrlNote" xml:space="preserve">
+    <value>&lt;strong&gt;Sorry/not sorry&amp;mdash;only for visualstudio.com or TFS 2015 right now&lt;/strong&gt;. Stay tuned for old-school support. Or &lt;a href="//github.com/jonfazzaro/skeleton" target="_blank"&gt;pull request me, bro&lt;/a&gt;.</value>
+  </data>
+  <data name="ProjectCollectionUrlPrompt" xml:space="preserve">
+    <value>You know, like https://mah.visualstudio.com/DefaultCollection</value>
+  </data>
+  <data name="RevertButtonCaption" xml:space="preserve">
+    <value>Revert</value>
+  </data>
+  <data name="SaveButtonCaption" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SignInButtonCaption" xml:space="preserve">
+    <value>Map Me</value>
+  </data>
+  <data name="SignInPageTitle" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="SignOutButtonCaption" xml:space="preserve">
+    <value>Sign out</value>
   </data>
 </root>

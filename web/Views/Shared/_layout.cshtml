@@ -1,10 +1,11 @@
 ﻿@using Skeleton.Web.Views
 @model Skeleton.Web.Models.IViewModel
+@using Skeleton.Web.Properties
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@Model.Title / Skeleton</title>
+    <title>@Model.Title / @Resources.ApplicationName</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="~/img/skull.png" />
@@ -16,10 +17,10 @@
         <section class="container-fluid">
             <h1>
                 <img src="~/img/skeleton.png" width="50" />
-                Skeleton
+                @Resources.ApplicationName
                 <small>@Model.Title</small>
                 <div class="pull-right">
-                    <a class="btn" href="~/signout">Sign out</a>
+                    <a class="btn" href="~/signout">@Resources.SignOutButtonCaption</a>
                 </div>
             </h1>
             <br />

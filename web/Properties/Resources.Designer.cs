@@ -70,11 +70,153 @@ namespace Skeleton.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Project.
+        /// </summary>
+        public static string ChangeProjectButtonCaption {
+            get {
+                return ResourceManager.GetString("ChangeProjectButtonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Walk the skeleton.
+        /// </summary>
+        public static string ChooseProjectButtonCaption {
+            get {
+                return ResourceManager.GetString("ChooseProjectButtonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick your poison.
+        /// </summary>
+        public static string ChooseProjectPageTitle {
+            get {
+                return ResourceManager.GetString("ChooseProjectPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Choose one).
+        /// </summary>
+        public static string ChoosePrompt {
+            get {
+                return ResourceManager.GetString("ChoosePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Let&apos;s try that again..
         /// </summary>
         public static string ConnectionErrorMessage {
             get {
                 return ResourceManager.GetString("ConnectionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lovingly heaped together by &lt;a href=&quot;//twitter.com/jonfazzaro/&quot; target=&quot;_blank&quot;&gt;@@jonfazzaro&lt;/a&gt;..
+        /// </summary>
+        public static string FooterCopy {
+            get {
+                return ResourceManager.GetString("FooterCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See what I did there? Heaped? &amp;#13;&amp;#13;Managed code? &amp;#13;&amp;#13;&amp;#13;&amp;#13;I&apos;ll see myself out..
+        /// </summary>
+        public static string FooterTooltip {
+            get {
+                return ResourceManager.GetString("FooterTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Story mapping for TFS..
+        /// </summary>
+        public static string Headline {
+            get {
+                return ResourceManager.GetString("Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;
+        ///                Did you know? &lt;a href=&quot;http://jpattonassociates.com/the-new-backlog/&quot; target=&quot;_blank&quot;&gt;The new user story backlog is a map&lt;/a&gt;.
+        ///            &lt;/p&gt;
+        ///            &lt;p&gt;
+        ///                And until our pals on the TFS team &lt;a href=&quot;https://visualstudio.uservoice.com/forums/121579-visual-studio/suggestions/4130976-create-a-new-view-in-tfs-task-board-to-view-backlo&quot; target=&quot;_blank&quot;&gt;get around to building one in&lt;/a&gt;, &lt;strong&gt;Skeleton&lt;/strong&gt;&apos;s got your back.
+        ///            &lt;/p&gt;
+        ///            &lt;p&gt;
+        ///    [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string LeadCopy {
+            get {
+                return ResourceManager.GetString("LeadCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong&gt;Sorry/not sorry&amp;mdash;only for visualstudio.com or TFS 2015 right now&lt;/strong&gt;. Stay tuned for old-school support. Or &lt;a href=&quot;//github.com/jonfazzaro/skeleton&quot; target=&quot;_blank&quot;&gt;pull request me, bro&lt;/a&gt;..
+        /// </summary>
+        public static string ProjectCollectionUrlNote {
+            get {
+                return ResourceManager.GetString("ProjectCollectionUrlNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You know, like https://mah.visualstudio.com/DefaultCollection.
+        /// </summary>
+        public static string ProjectCollectionUrlPrompt {
+            get {
+                return ResourceManager.GetString("ProjectCollectionUrlPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revert.
+        /// </summary>
+        public static string RevertButtonCaption {
+            get {
+                return ResourceManager.GetString("RevertButtonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SaveButtonCaption {
+            get {
+                return ResourceManager.GetString("SaveButtonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Me.
+        /// </summary>
+        public static string SignInButtonCaption {
+            get {
+                return ResourceManager.GetString("SignInButtonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign in.
+        /// </summary>
+        public static string SignInPageTitle {
+            get {
+                return ResourceManager.GetString("SignInPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign out.
+        /// </summary>
+        public static string SignOutButtonCaption {
+            get {
+                return ResourceManager.GetString("SignOutButtonCaption", resourceCulture);
             }
         }
     }

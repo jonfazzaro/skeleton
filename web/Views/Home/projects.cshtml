@@ -1,14 +1,15 @@
 ﻿@model Skeleton.Web.Models.ProjectsViewModel
+@using Skeleton.Web.Properties
 
 <section id="projects">
     @using (Html.BeginForm()) {
         <div class="form-group row">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.SelectedProject, new { @class = "label-control" })
-                @Html.DropDownListFor(m => m.SelectedProject, new SelectList(Model.Projects), "(Choose one)", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.SelectedProject, new SelectList(Model.Projects), Resources.ChoosePrompt, new { @class = "form-control" })
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success">Walk the skeleton</button>
+        <button type="submit" class="btn btn-success">@Resources.ChooseProjectButtonCaption</button>
     }
 </section>

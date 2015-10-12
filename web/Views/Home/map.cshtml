@@ -11,10 +11,10 @@
                 @Resources.ApplicationName
                 <small><a target="_blank" href="@Model.BaseUrl/@Model.ProjectName/_backlogs">@Model.ProjectName</a></small>
                 <div class="pull-right">
-                    <a class="btn btn-success" data-bind="click: save, visible: isDirty">Save</a>
-                    <a class="btn" data-bind="click: load('@Model.ProjectName'), visible: isDirty">Revert</a>
-                    <a class="btn" href="~/projects">Change project</a>
-                    <a class="btn" href="~/signout">Sign out</a>
+                    <a class="btn btn-success" data-bind="click: save, visible: isDirty">@Resources.SaveButtonCaption</a>
+                    <a class="btn" data-bind="click: load('@Model.ProjectName'), visible: isDirty">@Resources.RevertButtonCaption</a>
+                    <a class="btn" href="~/projects">@Resources.ChangeProjectButtonCaption</a>
+                    <a class="btn" href="~/signout">@Resources.SignOutButtonCaption</a>
                 </div>
             </h1>
             <br />

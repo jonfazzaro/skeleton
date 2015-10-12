@@ -178,7 +178,7 @@ describe("The map view model", function () {
                 });
 
                 it("toasts to the users success", function () {
-                    expect(toastr.success).toHaveBeenCalledWith("Saved!");
+                    expect(toastr.success).toHaveBeenCalledWith(_resources.strings.savedMessage);
                 });
             });
         });

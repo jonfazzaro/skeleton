@@ -1,11 +1,12 @@
 ﻿namespace Skeleton.Web.Models {
+    using Properties;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public class ProjectsViewModel : IViewModel {
         public ProjectsViewModel() {
-            Title = "Pick your poison";
+            Title = Resources.ChooseProjectPageTitle;
         }
 
         public string ErrorMessage { get; set; }
