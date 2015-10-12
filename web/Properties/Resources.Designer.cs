@@ -115,7 +115,7 @@ namespace Skeleton.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lovingly heaped together by &lt;a href=&quot;//twitter.com/jonfazzaro/&quot; target=&quot;_blank&quot;&gt;@@jonfazzaro&lt;/a&gt;..
+        ///   Looks up a localized string similar to Lovingly heaped together by &lt;a href=&quot;//twitter.com/jonfazzaro/&quot; target=&quot;_blank&quot;&gt;@jonfazzaro&lt;/a&gt;..
         /// </summary>
         public static string FooterCopy {
             get {

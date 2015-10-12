@@ -9,8 +9,8 @@
 
     <div class="row">
         <div class="lead col-sm-12">
-            <h1>@Resources.Headline</h1>
-            @Resources.LeadCopy
+            <h1>@Html.Raw(@Resources.Headline)</h1>
+            @Html.Raw(@Resources.LeadCopy)
             <div class="text-center visible-xs">
                 <img src="~/img/skull.png" />
             </div>
@@ -22,7 +22,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <p class="alert alert-danger">
-                        @Model.ErrorMessage
+                        @Html.Raw(@Model.ErrorMessage)
                     </p>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 @Html.LabelFor(m => m.Url, new { @class = "label-control" })
                 @Html.TextBoxFor(m => m.Url, new { @class = "form-control", type = "url", placeholder = Resources.ProjectCollectionUrlPrompt, title = Resources.ProjectCollectionUrlPrompt })
                 @Html.ValidationMessageFor(m => m.Url, null, new { @class = "text-danger" })
-                <small class="help-block">@Resources.ProjectCollectionUrlNote</small>
+                <small class="help-block">@Html.Raw(@Resources.ProjectCollectionUrlNote)</small>
             </div>
         </div>
         <div class="form-group row">
@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                <button type="submit" class="btn btn-lg btn-success">@Resources.SignInButtonCaption</button>
+                <button type="submit" class="btn btn-lg btn-success">@Html.Raw(@Resources.SignInButtonCaption)</button>
             </div>
         </div>
     }
@@ -60,10 +60,11 @@
     <br />
     <div class="row">
         <div class="col-sm-6" title="@Resources.FooterTooltip">
-            @Resources.FooterCopy
+            @Html.Raw(@Resources.FooterCopy)
         </div>
     </div>
     <br />
+    
 </div>
 
 <div class="col-sm-6 skeleton text-center visible-sm visible-md visible-lg">

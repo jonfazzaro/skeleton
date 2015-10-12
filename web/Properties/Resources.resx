@@ -136,7 +136,7 @@
     <value>Let's try that again.</value>
   </data>
   <data name="FooterCopy" xml:space="preserve">
-    <value>Lovingly heaped together by &lt;a href="//twitter.com/jonfazzaro/" target="_blank"&gt;@@jonfazzaro&lt;/a&gt;.</value>
+    <value>Lovingly heaped together by &lt;a href="//twitter.com/jonfazzaro/" target="_blank"&gt;@jonfazzaro&lt;/a&gt;.</value>
   </data>
   <data name="FooterTooltip" xml:space="preserve">
     <value>See what I did there? Heaped? &amp;#13;&amp;#13;Managed code? &amp;#13;&amp;#13;&amp;#13;&amp;#13;I'll see myself out.</value>
