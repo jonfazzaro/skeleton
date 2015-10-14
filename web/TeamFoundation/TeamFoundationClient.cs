@@ -131,6 +131,20 @@
         private static void AssignFeatures(IEnumerable<WorkItemLink> links, List<Card> cards) {
             foreach (var link in links)
                 AssignFeature(link, cards);
+
+            FlattenFeatures(cards);
+        }
+
+        private static void FlattenFeatures(IEnumerable<Card> cards) {
+            foreach (var card in cards.Where(c => c.FeatureId != null))
+                card.FeatureId = GetParentId(cards, card);
+        }
+
+        private static int GetParentId(IEnumerable<Card> cards, Card card) {
+            var parent = cards.FirstOrDefault(c => c.Id == card.FeatureId);
+            if (parent.FeatureId == null)
+                return parent.Id;
+            return GetParentId(cards, parent);
         }
 
         private static void AssignFeature(WorkItemLink link, IEnumerable<Card> cards) {
