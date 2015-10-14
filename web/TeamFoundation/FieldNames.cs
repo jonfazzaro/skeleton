@@ -4,5 +4,6 @@
         public const string StackRank = "Microsoft.VSTS.Common.StackRank";
         public const string WorkItemType = "System.WorkItemType";
         public const string Title = "System.Title";
+        public const string TeamProject = "System.TeamProject";
     }
 }

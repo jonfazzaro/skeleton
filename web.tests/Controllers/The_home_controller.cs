@@ -17,7 +17,8 @@
         private static HomeController _controller;
         private static IEnumerable<string> _projectNames = new List<string> { "Hector", "Projector", "Ribbon Reflector", "A Picture of Nectar" };
         private const string _tfsUrl = "https://my.tfs.collection/word";
-        private static Mock<ICardsClient> _clientMock;
+        private static Mock<ICardsClient> _cardsClientMock;
+        private static Mock<IProjectsClient> _projectsClientMock;
 
         [Test]
         public void loads_the_signin_page() {
@@ -42,12 +43,13 @@
             }
 
             [Test]
-            public async Task gets_a_list_of_project_names_and_redirects_to_projects() {
+            public async Task gets_a_list_of_project_names_and_fields_and_redirects_to_projects() {
                 Arrange();
                 ArrangeSession();
-                ArrangeClient();
+                ArrangeProjectsClient();
                 var result = await _controller.Signin(new SignInViewModel()) as RedirectToRouteResult;
                 CollectionAssert.AreEqual(_projectNames, _sessionProvider.Session.Projects);
+                CollectionAssert.AreEqual(new Dictionary<string, string>(), _sessionProvider.Session.ProjectPriorityFieldNames);
                 Assert.AreEqual("projects", result.RouteValues["action"]);
             }
 
@@ -57,7 +59,7 @@
                 public async Task shows_an_error_on_the_signin_page() {
                     Arrange();
                     ArrangeSession();
-                    ArrangeClientToThrow();
+                    ArrangeProjectsClientToThrow();
                     var result = await _controller.Signin(new SignInViewModel()) as ViewResult;
                     var model = result.Model as SignInViewModel;
                     Assert.IsTrue(model.HasError);
@@ -190,8 +192,9 @@
 
         public static void Arrange() {
             _sessionProvider = new FakeSessionProvider();
-            _clientMock = new Mock<ICardsClient>();
-            _controller = new HomeController(_sessionProvider, _clientMock.Object);
+            _cardsClientMock = new Mock<ICardsClient>();
+            _projectsClientMock = new Mock<IProjectsClient>();
+            _controller = new HomeController(_sessionProvider, _cardsClientMock.Object, _projectsClientMock.Object);
         }
 
         private static void ArrangeSession() {
@@ -201,12 +204,15 @@
             };
         }
 
-        private static void ArrangeClient() {
-            _clientMock.Setup(c => c.GetProjectNames()).Returns(Task.FromResult(_projectNames));
+        private static void ArrangeProjectsClient() {
+            _projectsClientMock.Setup(c => c.GetProjectNames())
+                .Returns(Task.FromResult(_projectNames));
+            _projectsClientMock.Setup(c => c.GetProjectPriorityFieldNames(_projectNames))
+                .Returns(Task.FromResult(new Dictionary<string, string>()));
         }
 
-        private static void ArrangeClientToThrow() {
-            _clientMock.Setup(c => c.GetProjectNames()).Throws(new Exception("wtf"));
+        private static void ArrangeProjectsClientToThrow() {
+            _projectsClientMock.Setup(c => c.GetProjectNames()).Throws(new Exception("wtf"));
         }
     }
 }

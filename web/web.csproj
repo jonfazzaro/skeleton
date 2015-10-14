@@ -232,6 +232,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebModule.cs" />
+    <Compile Include="Cards\IProjectsClient.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

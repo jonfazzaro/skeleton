@@ -9,6 +9,7 @@
         public override void Load() {
             Bind<ISessionProvider>().To<HttpSessionProvider>();
             Bind<ICardsClient>().To<TeamFoundationClient>();
+            Bind<IProjectsClient>().To<TeamFoundationClient>();
         }
     }
 }

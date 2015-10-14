@@ -13,8 +13,9 @@
     using System.Net;
     using System.Threading.Tasks;
 
-    public class TeamFoundationClient : ICardsClient {
+    public class TeamFoundationClient : ICardsClient, IProjectsClient {
         readonly ISessionProvider _provider;
+        readonly string[] _workItemTypes = { "Feature", "User Story", "Product Backlog Item" };
 
         public TeamFoundationClient(ISessionProvider provider) {
             _provider = provider;
@@ -25,10 +26,51 @@
             return projects.Select(p => p.Name).ToList();
         }
 
+        public async Task<Dictionary<string, string>> GetProjectPriorityFieldNames(IEnumerable<string> projectNames) {
+            var priorityFields = new Dictionary<string, string>();
+            foreach (var name in projectNames)
+                priorityFields.Add(name.ToLower(), await GetPriorityFieldName(name));
+            return priorityFields;
+        }
+
+        private async Task<string> GetPriorityFieldName(string projectName) {
+            var types = await WorkItemsClient.GetWorkItemTypesAsync(projectName);
+            var xmlForms = types.Where(t => _workItemTypes.Contains(t.Name)).Select(t => t.XmlForm);
+            var xmlForm = string.Join(string.Empty, xmlForms);
+            return GetPriorityFieldNameFromXml(xmlForm);
+        }
+
+        private static string GetPriorityFieldNameFromXml(string xml) {
+            if (xml.Contains(FieldNames.StackRank))
+                return FieldNames.StackRank;
+
+            return FieldNames.BacklogPriority;
+        }
+
         public async Task UpdateCards(IEnumerable<Card> cards) {
             foreach (var card in cards)
                 await Update(card);
         }
+
+        private async Task Update(Card card) {
+            var doc = CreateUpdateDocument(card);
+            await WorkItemsClient.UpdateWorkItemAsync(doc, card.Id);
+        }
+
+        private JsonPatchDocument CreateUpdateDocument(Card card) {
+            return new JsonPatchDocument {
+                new JsonPatchOperation {
+                    Path = "/fields/" + PriorityFieldNameFor(card.Project),
+                    Operation = GetOperation(card),
+                    Value = card.Priority ?? 0
+                }
+            };
+        }
+
+        private string PriorityFieldNameFor(string projectName) {
+            return _provider.Session.ProjectPriorityFieldNames[projectName.ToLower()];
+        }
+
         public async Task<IEnumerable<Card>> GetCards(string projectName) {
             return await Query(
                 string.Format(@"SELECT * FROM WorkItemLinks WHERE 
@@ -37,8 +79,8 @@
                                 [Target].[System.State] NOT IN('Done', 'Closed', 'Resolved') AND
                                 [Target].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item') AND 
                                 [Source].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item')
-                                ORDER BY [Microsoft.VSTS.Common.BacklogPriority], [Source].[System.WorkItemType]
-                                mode(recursive)", projectName));
+                                ORDER BY [Source].[System.WorkItemType], [{1}]
+                                mode(recursive)", projectName, PriorityFieldNameFor(projectName)));
         }
 
         private ProjectHttpClient _projectsClient;
@@ -70,37 +112,31 @@
                     _provider.Session.Password));
         }
 
-        private async Task Update(Card card) {
-            var updates = Updates(FieldNames.Priority, card.Priority);
-            await WorkItemsClient.UpdateWorkItemAsync(updates, card.Id);
-        }
 
-        private static JsonPatchDocument Updates(string field, object value) {
-            var updates = new JsonPatchDocument();
-            updates.Add(Update(field, value));
-            return updates;
+        private static Operation GetOperation(Card card) {
+            return card.OriginalPriority == null
+                ? Operation.Add
+                : Operation.Replace;
         }
-
-        private static JsonPatchOperation Update(string field, object value) {
-            return new JsonPatchOperation {
-                Path = "/fields/" + field,
-                Operation = Operation.Replace,
-                Value = value
-            };
-        }
-
 
 
         private async Task<IEnumerable<Card>> Query(string wiql) {
             var result = await WorkItemsClient.QueryByWiqlAsync(new Wiql { Query = wiql });
             var workItems = await GetWorkItems(result);
             var cards = workItems.Select(AsCard).ToList();
-            foreach (var relation in result.WorkItemRelations) {
-                var story = cards.FirstOrDefault(c => c.Id == relation.Target?.Id);
-                if (story != null)
-                    story.FeatureId = relation.Source?.Id;
-            }
+            AssignFeatures(result.WorkItemRelations, cards);
             return cards;
+        }
+
+        private static void AssignFeatures(IEnumerable<WorkItemLink> links, List<Card> cards) {
+            foreach (var link in links)
+                AssignFeature(link, cards);
+        }
+
+        private static void AssignFeature(WorkItemLink link, IEnumerable<Card> cards) {
+            var card = cards.FirstOrDefault(c => c.Id == link.Target?.Id);
+            if (card != null)
+                card.FeatureId = link.Source?.Id;
         }
 
         private async Task<List<WorkItem>> GetWorkItems(WorkItemQueryResult result) {
@@ -115,16 +151,35 @@
         private static Func<WorkItem, Card> AsCard =
              i => new Card {
                  Id = i.Id.GetValueOrDefault(0),
-                 Title = (string)i.Fields["System.Title"],
-                 Type = (string)i.Fields["System.WorkItemType"],
-                 Priority = Priority(i)
+                 Title = (string)i.Fields[FieldNames.Title],
+                 Type = (string)i.Fields[FieldNames.WorkItemType],
+                 Priority = PriorityValue(i),
+                 OriginalPriority = PriorityValue(i),
+                 Project = (string)i.Fields[FieldNames.TeamProject]
              };
 
-        private static double? Priority(WorkItem i) {
-            if (!i.Fields.Keys.Contains(FieldNames.Priority))
-                return null;
-
-            return (double)i.Fields[FieldNames.Priority];
+        private static string PriorityFieldName(WorkItem i) {
+            if (HasField(i, FieldNames.StackRank))
+                return FieldNames.StackRank;
+            if (HasField(i, FieldNames.StackRank))
+                return FieldNames.BacklogPriority;
+            return null;
         }
+
+        private static double? PriorityValue(WorkItem i) {
+            var field = PriorityFieldName(i);
+            if (HasField(i, field))
+                return (double)i.Fields[field];
+
+            return null;
+        }
+
+        private static bool HasField(WorkItem item, string fieldName) {
+            if (string.IsNullOrWhiteSpace(fieldName))
+                return false;
+
+            return item.Fields.Keys.Contains(fieldName);
+        }
+
     }
 }

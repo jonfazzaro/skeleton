@@ -10,11 +10,13 @@
     [RoutePrefix("")]
     public class HomeController : Controller {
         readonly ISessionProvider _provider;
-        readonly ICardsClient _client;
+        readonly ICardsClient _cards;
+        readonly IProjectsClient _projects;
 
-        public HomeController(ISessionProvider sessionProvider, ICardsClient client) {
+        public HomeController(ISessionProvider sessionProvider, ICardsClient cards, IProjectsClient projects) {
             _provider = sessionProvider;
-            _client = client;
+            _cards = cards;
+            _projects = projects;
         }
 
         [Route("")]
@@ -108,7 +110,9 @@
         }
 
         private async Task LoadProjects() {
-            _provider.Session.Projects = await _client.GetProjectNames();
+            _provider.Session.Projects = await _projects.GetProjectNames();
+            _provider.Session.ProjectPriorityFieldNames =
+                await _projects.GetProjectPriorityFieldNames(_provider.Session.Projects);
         }
 
         private ActionResult Error(IViewModel model) {
