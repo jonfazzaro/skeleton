@@ -12,6 +12,7 @@ namespace Skeleton.Web.App_Start {
         private static void RegisterCssBundles(BundleCollection bundles) {
             bundles.Add(new StyleBundle("~/css")
                 .Include("~/bower_components/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform())
+                .Include("~/bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css")
                 .Include("~/bower_components/toastr/toastr.min.css")
                 .Include("~/app.css", new CssRewriteUrlTransform()));
         }
@@ -22,6 +23,7 @@ namespace Skeleton.Web.App_Start {
                 .Include("~/bower_components/jquery/dist/jquery.min.js")
                 .Include("~/bower_components/toastr/toastr.min.js")
                 .Include("~/bower_components/bootstrap/dist/js/bootstrap.min.js")
+                .Include("~/bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js")
                 .Include("~/bower_components/linqjs/linq.min.js")
                 .Include("~/bower_components/Sortable/Sortable.js")
                 .Include("~/scripts/sortable.js")

@@ -35,11 +35,12 @@
             public async Task sets_the_values_in_the_session() {
                 Arrange();
                 ArrangeSession();
-                var model = new SignInViewModel { Url = _tfsUrl, Username = "dude@bro.com", Password = "12345" };
+                var model = new SignInViewModel { Url = _tfsUrl, Username = "dude@bro.com", Password = "12345", RememberMe = true };
                 await _controller.Signin(model);
                 Assert.AreEqual(_tfsUrl, _sessionProvider.Session.Url);
                 Assert.AreEqual("dude@bro.com", _sessionProvider.Session.Username);
                 Assert.AreEqual("12345", _sessionProvider.Session.Password);
+                Assert.AreEqual(true, _sessionProvider.Session.RememberMe);
             }
 
             [Test]

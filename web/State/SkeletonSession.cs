@@ -15,5 +15,6 @@ namespace Skeleton.State {
         public string Password { get; set; }
         public IEnumerable<string> Projects { get; set; }
         public Dictionary<string, string> ProjectPriorityFieldNames { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

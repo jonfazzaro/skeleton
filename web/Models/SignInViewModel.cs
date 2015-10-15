@@ -16,5 +16,7 @@
         [DisplayName("Project Collection URL")]
         public string Url { get; set; }
         public string Username { get; set; }
+        [DisplayName("Remember me")]
+        public bool RememberMe { get; set; }
     }
 }

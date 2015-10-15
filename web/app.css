@@ -11,10 +11,6 @@ h1, h2, h3, h4, h5, h6 {
     visibility: hidden;
 }
 
-#projects form {
-    margin-left: 60px;
-}
-
 td {
     width: 150px;
 }
@@ -30,4 +26,10 @@ td {
 td {
     vertical-align: top;
     padding-right: 15px;
+}
+
+@media(min-width:990px){
+    #projects form {
+        margin-left: 60px;
+    }
 }

@@ -102,7 +102,8 @@
             var session = new SkeletonSession {
                 Url = model.Url,
                 Username = model.Username,
-                Password = model.Password
+                Password = model.Password,
+                RememberMe = model.RememberMe
             };
 
             _provider.Session = session;
