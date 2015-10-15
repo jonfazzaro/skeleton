@@ -13,8 +13,8 @@
         }
 
         [Route("")]
-        public async Task<IEnumerable<Card>> Get(string projectName) {
-            return await _client.GetCards(projectName);
+        public async Task<IEnumerable<Card>> Get(string projectName, int depth = 0) {
+            return await _client.GetCards(projectName, depth);
         }
 
         [Route("")]

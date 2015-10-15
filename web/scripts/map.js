@@ -16,10 +16,10 @@
     var _countBy = 10;
     return self;
 
-    function load(projectName) {
+    function load(projectName, depth) {
         _projectName = projectName;
         self.isLoading(true);
-        return api.cards.GET(projectName)
+        return api.cards.GET(projectName, depth)
             .done(loadCards)
             .fail(handleError)
             .always(stopLoading);
@@ -75,7 +75,7 @@
     }
 
     function children(card) {
-        return sort(stories(self.cards().filter(byFeatureId(card.Id))));
+        return sort(stories(self.cards().filter(byParentId(card.Id))));
     }
 
     function parents(cards) {
@@ -84,9 +84,9 @@
         });
     }
 
-    function byFeatureId(id) {
+    function byParentId(id) {
         return function (c) {
-            return c.FeatureId == id;
+            return c.ParentId == id;
         };
     }
 

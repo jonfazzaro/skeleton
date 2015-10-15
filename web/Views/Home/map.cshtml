@@ -51,7 +51,7 @@
             var res = new Resources();
             var model = new mapViewModel(api, res);
             ko.applyBindings(model);
-            model.load('@Model.ProjectName');
+            model.load('@Model.ProjectName', @Model.Depth);
         });
     </script>
 }

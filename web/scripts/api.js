@@ -9,8 +9,12 @@
 
     return self;
 
-    function getCards(projectName) {
-        return get(cardsUri(projectName));
+    function getCards(projectName, depth) {
+        return get(cardsUri(projectName) + queryString(depth));
+    }
+
+    function queryString(depth) {
+        return depth ? '?depth=' + depth : '';
     }
 
     function updateCards(projectName, cards) {

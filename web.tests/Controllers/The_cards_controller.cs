@@ -30,7 +30,20 @@
                 var cards = await _controller.Get("ProjectObject");
                 Assert.AreEqual(expectedCards, cards);
             }
+
+            [TestFixture]
+            public class with_a_specified_depth {
+
+                [Test]
+                public async Task passes_the_depth_arg() {
+                    Arrange();
+                    ArrangeGetToReturn(new List<Card> { new Card(), new Card() });
+                    var cards = await _controller.Get("ProjectObject", 6);
+                    _client.Verify(c => c.GetCards("ProjectObject", 6));
+                }
+            }
         }
+
         [TestFixture]
         public class when_putting_cards {
 
@@ -51,13 +64,14 @@
         }
 
         private static void ArrangeGetToReturn(IEnumerable<Card> expectedCards) {
-            _client.Setup(c => c.GetCards("ProjectObject"))
-                            .Returns(Task.FromResult(expectedCards.AsEnumerable()));
+            _client.Setup(c => c.GetCards("ProjectObject", 0))
+                .Returns(Task.FromResult(expectedCards.AsEnumerable()))
+                .Verifiable();
         }
 
         private static void ArrangeVerifiableUpdate(IEnumerable<Card> expectedCards) {
             _client.Setup(c => c.UpdateCards(expectedCards))
-                            .Returns(Task.FromResult(string.Empty)).Verifiable();
+                .Returns(Task.FromResult(string.Empty)).Verifiable();
         }
     }
 }

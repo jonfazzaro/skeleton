@@ -10,12 +10,10 @@
     [RoutePrefix("")]
     public class HomeController : Controller {
         readonly ISessionProvider _provider;
-        readonly ICardsClient _cards;
         readonly IProjectsClient _projects;
 
-        public HomeController(ISessionProvider sessionProvider, ICardsClient cards, IProjectsClient projects) {
+        public HomeController(ISessionProvider sessionProvider, IProjectsClient projects) {
             _provider = sessionProvider;
-            _cards = cards;
             _projects = projects;
         }
 
@@ -55,21 +53,22 @@
         }
 
         [Route("map/{projectName}")]
-        public ActionResult Map(string projectName) {
+        public ActionResult Map(string projectName, int depth = 0) {
             if (_provider.Session == null)
                 return RedirectToAction("signin");
 
             if (string.IsNullOrWhiteSpace(projectName))
                 return RedirectToAction("projects");
 
-            return View(MapViewModel(projectName));
+            return View(MapViewModel(projectName, depth));
         }
 
-        private MapViewModel MapViewModel(string projectName) {
+        private MapViewModel MapViewModel(string projectName, int depth) {
             return new MapViewModel {
                 Title = projectName,
                 ProjectName = projectName,
-                BaseUrl = _provider.Session.Url
+                BaseUrl = _provider.Session.Url,
+                Depth = depth
             };
         }
 

@@ -17,6 +17,17 @@ describe("The api service", function () {
             expect(_options.type).toEqual("get");
         });
 
+        describe("given a depth", function () {
+            beforeEach(function () {
+                _result = _api.cards.GET('mahProject', 12);
+            });
+
+            it("calls the cards API", function () {
+                expect(_options.url).toEqual("base.uri.com/api/projects/mahProject/cards?depth=12");
+                expect(_options.type).toEqual("get");
+            });
+        });
+
         andThisStuffToo();
     });
     

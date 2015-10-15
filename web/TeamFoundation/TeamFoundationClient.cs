@@ -71,8 +71,8 @@
             return _provider.Session.ProjectPriorityFieldNames[projectName.ToLower()];
         }
 
-        public async Task<IEnumerable<Card>> GetCards(string projectName) {
-            return await Query(
+        public async Task<IEnumerable<Card>> GetCards(string projectName, int depth = 0) {
+            var wiql =
                 string.Format(@"SELECT * FROM WorkItemLinks WHERE 
                                 [Source].[System.TeamProject] = '{0}' AND
                                 [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward' AND
@@ -80,7 +80,13 @@
                                 [Target].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item') AND 
                                 [Source].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item')
                                 ORDER BY [Source].[System.WorkItemType], [{1}]
-                                mode(recursive)", projectName, PriorityFieldNameFor(projectName)));
+                                mode(recursive)", projectName, PriorityFieldNameFor(projectName));
+            var result = await WorkItemsClient.QueryByWiqlAsync(new Wiql { Query = wiql });
+            var workItems = await GetWorkItems(result);
+            var cards = workItems.Select(AsCard).ToList();
+            AssignFeatures(result.WorkItemRelations, cards);
+            FlattenFeatures(cards, depth);
+            return cards;
         }
 
         private ProjectHttpClient _projectsClient;
@@ -119,47 +125,51 @@
                 : Operation.Replace;
         }
 
-
-        private async Task<IEnumerable<Card>> Query(string wiql) {
-            var result = await WorkItemsClient.QueryByWiqlAsync(new Wiql { Query = wiql });
-            var workItems = await GetWorkItems(result);
-            var cards = workItems.Select(AsCard).ToList();
-            AssignFeatures(result.WorkItemRelations, cards);
-            return cards;
-        }
-
         private static void AssignFeatures(IEnumerable<WorkItemLink> links, List<Card> cards) {
             foreach (var link in links)
                 AssignFeature(link, cards);
 
-            FlattenFeatures(cards);
         }
 
-        private static void FlattenFeatures(IEnumerable<Card> cards) {
+        private static void FlattenFeatures(IEnumerable<Card> cards, int depth) {
             foreach (var card in cards.Where(c => c.FeatureId != null))
-                card.FeatureId = GetParentId(cards, card);
+                card.ParentId = GetParentId(cards, card, depth);
         }
 
-        private static int GetParentId(IEnumerable<Card> cards, Card card) {
+        private static int GetParentId(IEnumerable<Card> cards, Card card, int depth) {
             var parent = cards.FirstOrDefault(c => c.Id == card.FeatureId);
-            if (parent.FeatureId == null)
+            if (parent.FeatureId == null || depth == 0)
                 return parent.Id;
-            return GetParentId(cards, parent);
+            return GetParentId(cards, parent, --depth);
         }
 
         private static void AssignFeature(WorkItemLink link, IEnumerable<Card> cards) {
             var card = cards.FirstOrDefault(c => c.Id == link.Target?.Id);
-            if (card != null)
+            if (card != null) {
                 card.FeatureId = link.Source?.Id;
+                card.ParentId = card.FeatureId;
+            }
         }
 
         private async Task<List<WorkItem>> GetWorkItems(WorkItemQueryResult result) {
             return await WorkItemsClient.GetWorkItemsAsync(Ids(result), null, null, WorkItemExpand.Fields);
+            //var items = new List<WorkItem>();
+            //var added = 1;
+            //var skip = 0;
+            //while (added > 0) {
+            //    var add = await WorkItemsClient.GetWorkItemsAsync(Ids(result, skip), null, null, WorkItemExpand.Fields);
+            //    items.AddRange(add);
+            //    added = add.Count();
+            //    skip += added;
+            //}
+            //return items;
         }
 
-        private static IEnumerable<int> Ids(WorkItemQueryResult result) {
+        private static IEnumerable<int> Ids(WorkItemQueryResult result, int skip = 0) {
             return result.WorkItemRelations.Where(r => r.Target != null).Select(r => r.Target.Id)
-                .Union(result.WorkItemRelations.Where(r => r.Source != null).Select(r => r.Source.Id)).Take(100);
+                .Union(result.WorkItemRelations.Where(r => r.Source != null).Select(r => r.Source.Id))
+                .Skip(skip)
+                .Take(100);
         }
 
         private static Func<WorkItem, Card> AsCard =

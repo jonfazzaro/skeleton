@@ -5,5 +5,9 @@
         public string ErrorMessage { get; set; }
         public bool HasError { get; set; }
         public string Title { get; set; }
+        public int Depth {
+            get;
+            set;
+        }
     }
 }

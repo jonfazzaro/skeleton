@@ -176,6 +176,17 @@
                     Assert.AreEqual("OhYeah", model.ProjectName);
                     Assert.AreEqual(_tfsUrl, model.BaseUrl);
                 }
+                [TestFixture]
+                public class when_the_user_specifies_a_depth {
+                    [Test]
+                    public void passes_the_depth_arg() {
+                        Arrange();
+                        ArrangeSession();
+                        var result = _controller.Map("OhYeah", 5) as ViewResult;
+                        var model = result.Model as MapViewModel;
+                        Assert.AreEqual(5, model.Depth);
+                    }
+                }
 
                 [TestFixture]
                 public class given_a_blank_project_name {
@@ -192,9 +203,8 @@
 
         public static void Arrange() {
             _sessionProvider = new FakeSessionProvider();
-            _cardsClientMock = new Mock<ICardsClient>();
             _projectsClientMock = new Mock<IProjectsClient>();
-            _controller = new HomeController(_sessionProvider, _cardsClientMock.Object, _projectsClientMock.Object);
+            _controller = new HomeController(_sessionProvider, _projectsClientMock.Object);
         }
 
         private static void ArrangeSession() {

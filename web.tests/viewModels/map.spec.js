@@ -21,7 +21,18 @@ describe("The map view model", function () {
         });
 
         it("calls the cards API with the project name", function () {
-            expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah');
+            var depth;
+            expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah', depth);
+        });
+
+        describe("when loaded with a depth", function () {
+            beforeEach(function () {
+                _model.load('yeah yeah', 17);
+            });
+
+            it("calls the cards API with the project name and the depth", function () {
+                expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah', 17);
+            });
         });
 
         it("gets the cards from the API", function () {
@@ -223,12 +234,12 @@ describe("The map view model", function () {
     }
 
     var _storyData = [
-        { Id: 1, Priority: 345, Type: 'Feature', FeatureId: null },
-        { Id: 2, Priority: 123, Type: 'Feature', FeatureId: null },
-        { Id: 4, Priority: 987, Type: 'Feature', FeatureId: null },
-        { Id: 7, Priority: 6543, Type: 'User Story', FeatureId: 4 },
-        { Id: 13, Priority: 4321, Type: 'Product Backlog Item', FeatureId: 4 },
-        { Id: 176, Priority: 124, Type: 'Product Backlog Item', FeatureId: 4 }
+        { Id: 1, Priority: 345, Type: 'Feature', FeatureId: null, ParentId: null },
+        { Id: 2, Priority: 123, Type: 'Feature', FeatureId: null, ParentId: null },
+        { Id: 4, Priority: 987, Type: 'Feature', FeatureId: null, ParentId: null },
+        { Id: 7, Priority: 6543, Type: 'User Story', FeatureId: 4, ParentId: 4 },
+        { Id: 13, Priority: 4321, Type: 'Product Backlog Item', FeatureId: 4, ParentId: 4 },
+        { Id: 176, Priority: 124, Type: 'Product Backlog Item', FeatureId: 4, ParentId: 4 }
     ];
 
     var _fakeDOM =
