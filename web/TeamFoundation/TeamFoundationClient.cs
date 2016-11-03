@@ -41,10 +41,10 @@
         }
 
         private static string GetPriorityFieldNameFromXml(string xml) {
-            if (xml.Contains(FieldNames.StackRank))
-                return FieldNames.StackRank;
+            if (xml.Contains(FieldNames.BacklogPriority))
+                return FieldNames.BacklogPriority;
+            return FieldNames.StackRank;
 
-            return FieldNames.BacklogPriority;
         }
 
         public async Task UpdateCards(IEnumerable<Card> cards) {
