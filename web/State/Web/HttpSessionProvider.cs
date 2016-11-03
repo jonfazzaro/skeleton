@@ -19,7 +19,7 @@
 
             set {
                 _context.Session[SkeletonSession.Key] = value;
-                if (value.RememberMe)
+                if (value?.RememberMe ?? true)
                     Stash(value);
             }
         }
