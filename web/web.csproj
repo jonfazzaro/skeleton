@@ -279,7 +279,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
+    <Compile Include="Telemetry\AiExceptionLogger.cs" />
+    <Compile Include="Telemetry\AiHandleErrorAttribute.cs" />
     <Compile Include="FilterConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
