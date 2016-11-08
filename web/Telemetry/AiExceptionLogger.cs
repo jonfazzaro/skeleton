@@ -1,10 +1,13 @@
-﻿namespace Skeleton.Web.Telemetry {
-    using System.Web.Http.ExceptionHandling;
+﻿using System.Web.Http.ExceptionHandling;
+using Microsoft.ApplicationInsights;
 
-    public class AiExceptionLogger : ExceptionLogger {
-
-        public override void Log(ExceptionLoggerContext context) {
-            var ai = new Microsoft.ApplicationInsights.TelemetryClient();
+namespace Skeleton.Web.Telemetry
+{
+    public class AiExceptionLogger : ExceptionLogger
+    {
+        public override void Log(ExceptionLoggerContext context)
+        {
+            var ai = new TelemetryClient();
             ai.TrackException(context.Exception);
         }
     }

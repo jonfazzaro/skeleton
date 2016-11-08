@@ -1,15 +1,17 @@
 ﻿using System.Web.Optimization;
 
-namespace Skeleton.Web.App_Start {
-
-    public class BundleConfig {
-
-        public static void RegisterBundles(BundleCollection bundles) {
+namespace Skeleton.Web.App_Start
+{
+    public class BundleConfig
+    {
+        public static void RegisterBundles(BundleCollection bundles)
+        {
             RegisterJavaScriptBundles(bundles);
             RegisterCssBundles(bundles);
         }
 
-        private static void RegisterCssBundles(BundleCollection bundles) {
+        private static void RegisterCssBundles(BundleCollection bundles)
+        {
             bundles.Add(new StyleBundle("~/css")
                 .Include("~/bower_components/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform())
                 .Include("~/bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css")
@@ -17,7 +19,8 @@ namespace Skeleton.Web.App_Start {
                 .Include("~/app.css", new CssRewriteUrlTransform()));
         }
 
-        private static void RegisterJavaScriptBundles(BundleCollection bundles) {
+        private static void RegisterJavaScriptBundles(BundleCollection bundles)
+        {
             bundles.Add(new ScriptBundle("~/js")
                 .Include("~/bower_components/knockoutjs/dist/knockout.js")
                 .Include("~/bower_components/jquery/dist/jquery.min.js")

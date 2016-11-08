@@ -1,5 +1,7 @@
-﻿namespace Skeleton.State {
-    public interface ISessionProvider {
+﻿namespace Skeleton.Web.State
+{
+    public interface ISessionProvider
+    {
         SkeletonSession Session { get; set; }
     }
 }

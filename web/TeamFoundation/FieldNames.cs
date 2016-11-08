@@ -1,5 +1,7 @@
-﻿namespace Skeleton.TeamFoundation {
-    public class FieldNames {
+﻿namespace Skeleton.Web.TeamFoundation
+{
+    public class FieldNames
+    {
         public const string BacklogPriority = "Microsoft.VSTS.Common.BacklogPriority";
         public const string StackRank = "Microsoft.VSTS.Common.StackRank";
         public const string WorkItemType = "System.WorkItemType";
