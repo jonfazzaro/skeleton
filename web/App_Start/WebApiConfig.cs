@@ -1,16 +1,19 @@
-﻿namespace Skeleton.Web {
-    using System.Web.Http;
-    using System.Web.Http.ExceptionHandling;
-    using Telemetry;
+﻿using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using Skeleton.Web.Telemetry;
 
-    public static class WebApiConfig {
-        public static void Register(HttpConfiguration config) {
+namespace Skeleton.Web
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
             config.MapHttpAttributeRoutes();
             config.Services.Add(typeof(IExceptionLogger), new AiExceptionLogger());
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new {id = RouteParameter.Optional}
             );
         }
     }

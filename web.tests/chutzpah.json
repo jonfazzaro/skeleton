@@ -1,9 +1,9 @@
 ﻿{
-	"Framework": "jasmine",
-	"References": [
-		{ "Path": "../web/bower_components/jquery/dist/jquery.min.js" },
-		{ "Path": "../web/bower_components/knockoutjs/dist/knockout.js" },
-		{ "Path": "../web/bower_components/toastr/toastr.min.js" },
-		{ "Path": "../web/scripts/resources.js" }
-	]
+    "Framework": "jasmine",
+    "References": [
+        { "Path": "../web/bower_components/jquery/dist/jquery.min.js" },
+        { "Path": "../web/bower_components/knockoutjs/dist/knockout.js" },
+        { "Path": "../web/bower_components/toastr/toastr.min.js" },
+        { "Path": "../web/scripts/resources.js" }
+    ]
 }

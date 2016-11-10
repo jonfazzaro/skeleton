@@ -1,7 +1,9 @@
-﻿namespace Skeleton.Web.Tests.Fakes {
-    using Skeleton.State;
+﻿using Skeleton.Web.State;
 
-    internal class FakeSessionProvider : ISessionProvider {
+namespace Skeleton.Web.Tests.Fakes
+{
+    internal class FakeSessionProvider : ISessionProvider
+    {
         public SkeletonSession Session { get; set; }
     }
 }
