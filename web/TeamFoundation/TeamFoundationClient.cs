@@ -78,7 +78,7 @@ namespace Skeleton.Web.TeamFoundation
                     [Target].[System.State] NOT IN('Done', 'Closed', 'Resolved', 'Removed') AND
                     [Target].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item') AND 
                     [Source].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item')
-                    ORDER BY [Source].[System.WorkItemType], [{PriorityFieldNameFor(projectName)}]";
+                    ORDER BY [Source].[System.WorkItemType], [{FieldNames.BacklogPriority}]";
 
             var result = await WorkItemsClient.QueryByWiqlAsync(new Wiql { Query = wiql });
             var workItems = await GetWorkItems(result);
@@ -149,7 +149,7 @@ namespace Skeleton.Web.TeamFoundation
             {
                 new JsonPatchOperation
                 {
-                    Path = "/fields/" + PriorityFieldNameFor(card.Project),
+                    Path = "/fields/" + FieldNames.BacklogPriority,
                     Operation = GetOperation(card),
                     Value = card.Priority ?? 0
                 }
