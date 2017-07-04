@@ -79,7 +79,7 @@ namespace Skeleton.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Walk the skeleton.
+        ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string ChooseProjectButtonCaption {
             get {
@@ -217,6 +217,15 @@ namespace Skeleton.Web.Properties {
         public static string SignOutButtonCaption {
             get {
                 return ResourceManager.GetString("SignOutButtonCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Walk the skeleton.
+        /// </summary>
+        public static string ViewMapButtonCaption {
+            get {
+                return ResourceManager.GetString("ViewMapButtonCaption", resourceCulture);
             }
         }
     }

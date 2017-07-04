@@ -124,7 +124,7 @@
     <value>Change Project</value>
   </data>
   <data name="ChooseProjectButtonCaption" xml:space="preserve">
-    <value>Walk the skeleton</value>
+    <value>Next</value>
   </data>
   <data name="ChooseProjectPageTitle" xml:space="preserve">
     <value>Pick your poison</value>
@@ -175,5 +175,8 @@
   </data>
   <data name="SignOutButtonCaption" xml:space="preserve">
     <value>Sign out</value>
+  </data>
+  <data name="ViewMapButtonCaption" xml:space="preserve">
+    <value>Walk the skeleton</value>
   </data>
 </root>

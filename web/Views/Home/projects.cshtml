@@ -11,16 +11,18 @@
             </div>
         </div>
 
-        if (!string.IsNullOrEmpty(Model.SelectedProject))
+        if (string.IsNullOrEmpty(Model.SelectedProject))
         {
+            <button type="submit" class="btn btn-success">@Html.Raw(@Resources.ChooseProjectButtonCaption)</button>
+        } else {
             <div class="form-group row">
                 <div class="col-md-4">
                     @Html.LabelFor(m => m.SelectedArea, new { @class = "label-control" })
                     @Html.DropDownListFor(m => m.SelectedArea, new SelectList(Model.Areas), Resources.ChoosePrompt, new { @class = "form-control" })
                 </div>
             </div>
+            <button type="submit" class="btn btn-success">@Html.Raw(@Resources.ViewMapButtonCaption)</button>
         }
 
-        <button type="submit" class="btn btn-success">@Html.Raw(@Resources.ChooseProjectButtonCaption)</button>
     }
 </section>

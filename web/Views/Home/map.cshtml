@@ -9,7 +9,7 @@
                 <img src="~/img/skeleton.gif" style="display:none;" data-bind="visible: isLoading" width="50" />
                 <img src="~/img/skeleton.png" data-bind="visible: !isLoading()" width="50" />
                 @Resources.ApplicationName
-                <small><a target="_blank" href="@Model.BaseUrl/@Model.ProjectName/_backlogs">@Model.ProjectName</a></small>
+                <small><a target="_blank" href="@Model.BaseUrl/@Model.ProjectName/@Model.AreaName/_backlogs">@Model.ProjectName/@Model.AreaName</a></small>
                 <div class="pull-right">
                     <a class="btn btn-success" data-bind="click: save, visible: isDirty">@Resources.SaveButtonCaption</a>
                     <a class="btn" data-bind="click: function() { load('@Model.ProjectName', '@Model.AreaName', @Model.Depth) }, visible: isDirty">@Resources.RevertButtonCaption</a>
@@ -26,7 +26,7 @@
     <script type="text/html" id="card">
         <div class="card panel" data-bind="css: 'panel-' + $data.class, attr: { id: card.Id }">
             <div class="panel-body" data-bind="css: 'bg-' + $data.class, attr: { title: card.Title }">
-                <a target="_blank" data-bind="text: card.Id, attr: { href: ['@Model.BaseUrl/@Model.ProjectName', '_workitems#_a=edit&id='].join('/') + card.Id }"></a>
+                <a target="_blank" data-bind="text: card.Id, attr: { href: ['@Model.BaseUrl/@Model.ProjectName/@Model.AreaName', '_workitems#_a=edit&id='].join('/') + card.Id }"></a>
                 <span data-bind="text: card.Title"></span>
             </div>
         </div>
