@@ -75,7 +75,7 @@ namespace Skeleton.Web.TeamFoundation
                     [Source].[System.TeamProject] = '{projectName}' AND
                     {AreaPathClause(projectName, areaName)}
                     [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward' AND
-                    [Target].[System.State] NOT IN('Done', 'Closed', 'Resolved') AND
+                    [Target].[System.State] NOT IN('Done', 'Closed', 'Resolved', 'Removed') AND
                     [Target].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item') AND 
                     [Source].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item')
                     ORDER BY [Source].[System.WorkItemType], [{PriorityFieldNameFor(projectName)}]";
@@ -234,11 +234,7 @@ namespace Skeleton.Web.TeamFoundation
 
         private static string PriorityFieldName(WorkItem i)
         {
-            if (HasField(i, FieldNames.StackRank))
-                return FieldNames.StackRank;
-            if (HasField(i, FieldNames.StackRank))
-                return FieldNames.BacklogPriority;
-            return null;
+            return FieldNames.BacklogPriority;
         }
 
         private string PriorityFieldNameFor(string projectName)
@@ -248,9 +244,8 @@ namespace Skeleton.Web.TeamFoundation
 
         private static double? PriorityValue(WorkItem i)
         {
-            var field = PriorityFieldName(i);
-            if (HasField(i, field))
-                return (double)i.Fields[field];
+            if (HasField(i, FieldNames.BacklogPriority))
+                return (double)i.Fields[FieldNames.BacklogPriority];
 
             return null;
         }
