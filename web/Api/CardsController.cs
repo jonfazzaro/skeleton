@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Skeleton.Web.Cards;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Skeleton.Web.Cards;
 
 namespace Skeleton.Web.Api
 {
-    [RoutePrefix("api/projects/{projectName}/cards")]
+    [RoutePrefix("api/projects/{projectName}/{areaName}/cards")]
     public class CardsController : ApiController
     {
         private readonly ICardsClient _client;
@@ -16,9 +16,9 @@ namespace Skeleton.Web.Api
         }
 
         [Route("")]
-        public async Task<IEnumerable<Card>> Get(string projectName, int depth = 0)
+        public async Task<IEnumerable<Card>> Get(string projectName, string areaName = null, int depth = 0)
         {
-            return await _client.GetCards(projectName, depth);
+            return await _client.GetCards(projectName, areaName, depth);
         }
 
         [Route("")]

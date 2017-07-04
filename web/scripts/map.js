@@ -12,14 +12,15 @@
     self.isDirty = ko.observable(false);
     self.save = save;
     self.isLoading = ko.observable(false);
-    var _projectName;
+    var _projectName, _areaName;
     var _countBy = 10;
     return self;
 
-    function load(projectName, depth) {
+    function load(projectName, areaName, depth) {
         _projectName = projectName;
+        _areaName = areaName;
         self.isLoading(true);
-        return api.cards.GET(projectName, depth)
+        return api.cards.GET(projectName, areaName, depth)
             .done(loadCards)
             .fail(handleError)
             .always(stopLoading);
@@ -42,7 +43,7 @@
 
     function save() {
         self.isLoading(true);
-        return api.cards.PUT(_projectName, self.cards())
+        return api.cards.PUT(_projectName, _areaName, self.cards())
             .done(saved)
             .fail(handleError)
             .always(stopLoading);

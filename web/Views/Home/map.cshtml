@@ -12,7 +12,7 @@
                 <small><a target="_blank" href="@Model.BaseUrl/@Model.ProjectName/_backlogs">@Model.ProjectName</a></small>
                 <div class="pull-right">
                     <a class="btn btn-success" data-bind="click: save, visible: isDirty">@Resources.SaveButtonCaption</a>
-                    <a class="btn" data-bind="click: function() { load('@Model.ProjectName', @Model.Depth) }, visible: isDirty">@Resources.RevertButtonCaption</a>
+                    <a class="btn" data-bind="click: function() { load('@Model.ProjectName', '@Model.AreaName', @Model.Depth) }, visible: isDirty">@Resources.RevertButtonCaption</a>
                     <a class="btn" href="~/projects">@Resources.ChangeProjectButtonCaption</a>
                     <a class="btn" href="~/signout">@Resources.SignOutButtonCaption</a>
                 </div>
@@ -51,7 +51,7 @@
             var res = new Resources();
             var model = new mapViewModel(api, res);
             ko.applyBindings(model);
-            model.load('@Model.ProjectName', @Model.Depth);
+            model.load('@Model.ProjectName', '@Model.AreaName', @Model.Depth);
         });
     </script>
 }

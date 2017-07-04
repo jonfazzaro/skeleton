@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.TeamFoundation.Core.WebApi;
+﻿using Microsoft.TeamFoundation.Core.WebApi;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 using Microsoft.VisualStudio.Services.Common;
@@ -11,6 +6,11 @@ using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Skeleton.Web.Cards;
 using Skeleton.Web.State;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Skeleton.Web.TeamFoundation
 {
@@ -20,18 +20,17 @@ namespace Skeleton.Web.TeamFoundation
             i => new Card
             {
                 Id = i.Id.GetValueOrDefault(0),
-                Title = (string) i.Fields[FieldNames.Title],
-                Type = (string) i.Fields[FieldNames.WorkItemType],
+                Title = (string)i.Fields[FieldNames.Title],
+                Type = (string)i.Fields[FieldNames.WorkItemType],
                 Priority = PriorityValue(i),
                 OriginalPriority = PriorityValue(i),
-                Project = (string) i.Fields[FieldNames.TeamProject]
+                Project = (string)i.Fields[FieldNames.TeamProject]
             };
 
-        private readonly ISessionProvider _provider;
-        private readonly string[] _workItemTypes = {"Feature", "User Story", "Product Backlog Item"};
+        private readonly string[] _workItemTypes = { "Feature", "User Story", "Product Backlog Item" };
 
+        private ISessionProvider _provider;
         private ProjectHttpClient _projectsClient;
-
         private WorkItemTrackingHttpClient _workItemsClient;
 
         public TeamFoundationClient(ISessionProvider provider)
@@ -69,18 +68,19 @@ namespace Skeleton.Web.TeamFoundation
                 await Update(card);
         }
 
-        public async Task<IEnumerable<Card>> GetCards(string projectName, int depth = 0)
+        public async Task<IEnumerable<Card>> GetCards(string projectName, string areaName = null, int depth = 0)
         {
             var wiql =
-                string.Format(@"SELECT * FROM WorkItemLinks WHERE 
-                                [Source].[System.TeamProject] = '{0}' AND
-                                [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward' AND
-                                [Target].[System.State] NOT IN('Done', 'Closed', 'Resolved') AND
-                                [Target].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item') AND 
-                                [Source].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item')
-                                ORDER BY [Source].[System.WorkItemType], [{1}]
-                                mode(recursive)", projectName, PriorityFieldNameFor(projectName));
-            var result = await WorkItemsClient.QueryByWiqlAsync(new Wiql {Query = wiql});
+                $@"SELECT * FROM WorkItemLinks WHERE 
+                    [Source].[System.TeamProject] = '{projectName}' AND
+                    {AreaPathClause(projectName, areaName)}
+                    [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward' AND
+                    [Target].[System.State] NOT IN('Done', 'Closed', 'Resolved') AND
+                    [Target].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item') AND 
+                    [Source].[System.WorkItemType] IN('Feature', 'User Story', 'Product Backlog Item')
+                    ORDER BY [Source].[System.WorkItemType], [{PriorityFieldNameFor(projectName)}]";
+
+            var result = await WorkItemsClient.QueryByWiqlAsync(new Wiql { Query = wiql });
             var workItems = await GetWorkItems(result);
             var cards = workItems.Select(AsCard).ToList();
             AssignFeatures(result.WorkItemRelations, cards);
@@ -88,10 +88,35 @@ namespace Skeleton.Web.TeamFoundation
             return cards;
         }
 
+        private static string AreaPathClause(string projectName, string areaName)
+        {
+            if (string.IsNullOrWhiteSpace(areaName))
+                return null;
+
+            return $"[Source].[System.AreaPath] = '{projectName}\\{areaName}' AND";
+        }
+
         public async Task<IEnumerable<string>> GetProjectNames()
         {
             var projects = await ProjectsClient.GetProjects();
             return projects.Select(p => p.Name).ToList();
+        }
+
+        public async Task<IEnumerable<string>> GetAreaNames(string projectName)
+        {
+            var areas = await WorkItemsClient.GetClassificationNodeAsync(
+                projectName, TreeStructureGroup.Areas, depth: 3);
+
+            return ListNodeTree(areas).ToList();
+        }
+
+        private IEnumerable<string> ListNodeTree(WorkItemClassificationNode node)
+        {
+            yield return node.Name;
+
+            if (node.Children != null)
+                foreach (var child in node.Children)
+                    yield return child.Name;
         }
 
         public async Task<Dictionary<string, string>> GetProjectPriorityFieldNames(IEnumerable<string> projectNames)
@@ -225,7 +250,7 @@ namespace Skeleton.Web.TeamFoundation
         {
             var field = PriorityFieldName(i);
             if (HasField(i, field))
-                return (double) i.Fields[field];
+                return (double)i.Fields[field];
 
             return null;
         }
@@ -235,5 +260,6 @@ namespace Skeleton.Web.TeamFoundation
             var doc = CreateUpdateDocument(card);
             await WorkItemsClient.UpdateWorkItemAsync(doc, card.Id);
         }
+
     }
 }

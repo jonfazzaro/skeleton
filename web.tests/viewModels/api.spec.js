@@ -9,21 +9,21 @@ describe("The api service", function () {
     describe("when getting cards", function () {
 
         beforeEach(function () {
-            _result = _api.cards.GET('mahProject');
+            _result = _api.cards.GET('mahProject', 'mahArea');
         });
 
         it("calls the cards API", function () {
-            expect(_options.url).toEqual("base.uri.com/api/projects/mahProject/cards");
+            expect(_options.url).toEqual("base.uri.com/api/projects/mahProject/mahArea/cards");
             expect(_options.type).toEqual("get");
         });
 
         describe("given a depth", function () {
             beforeEach(function () {
-                _result = _api.cards.GET('mahProject', 12);
+                _result = _api.cards.GET('mahProject', 'mahArea', 12);
             });
 
             it("calls the cards API", function () {
-                expect(_options.url).toEqual("base.uri.com/api/projects/mahProject/cards?depth=12");
+                expect(_options.url).toEqual("base.uri.com/api/projects/mahProject/mahArea/cards?depth=12");
                 expect(_options.type).toEqual("get");
             });
         });
@@ -35,11 +35,11 @@ describe("The api service", function () {
 
         beforeEach(function () {
             _cards = [{id:2},{id:5}];
-            _result = _api.cards.PUT('yoProject', _cards);
+            _result = _api.cards.PUT('yoProject', 'yoArea', _cards);
         });
 
         it("calls the cards API", function () {
-            expect(_options.url).toEqual("base.uri.com/api/projects/yoProject/cards");
+            expect(_options.url).toEqual("base.uri.com/api/projects/yoProject/yoArea/cards");
             expect(_options.type).toEqual("put");
             expect(_options.data).toBe(JSON.stringify(_cards));
         });
@@ -60,22 +60,22 @@ describe("The api service", function () {
         describe("given no base uri", function () {
             beforeEach(function () {
                 _api = new API();
-                _result = _api.cards.GET('mahProject');
+                _result = _api.cards.GET('mahProject', 'mahArea');
             });
 
             it("uses the root", function () {
-                expect(_options.url).toEqual("/api/projects/mahProject/cards");
+                expect(_options.url).toEqual("/api/projects/mahProject/mahArea/cards");
             });
         });
 
         describe("given a base uri of '/'", function () {
             beforeEach(function () {
                 _api = new API('/');
-                _result = _api.cards.GET('mahProject');
+                _result = _api.cards.GET('mahProject', 'mahArea');
             });
 
             it("uses the root", function () {
-                expect(_options.url).toEqual("/api/projects/mahProject/cards");
+                expect(_options.url).toEqual("/api/projects/mahProject/mahArea/cards");
             });
         });
     }

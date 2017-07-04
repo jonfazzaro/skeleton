@@ -9,16 +9,16 @@
 
     return self;
 
-    function getCards(projectName, depth) {
-        return get(cardsUri(projectName) + queryString(depth));
+    function getCards(projectName, areaName, depth) {
+        return get(cardsUri(projectName, areaName) + queryString(depth));
     }
 
     function queryString(depth) {
         return depth ? '?depth=' + depth : '';
     }
 
-    function updateCards(projectName, cards) {
-        return put(cardsUri(projectName), cards);
+    function updateCards(projectName, areaName, cards) {
+        return put(cardsUri(projectName, areaName), cards);
     }
 
     function get(uri) {
@@ -44,8 +44,8 @@
             : 'application/json';
     }
 
-    function cardsUri(projectName) {
-        return [baseUri, "api/projects", projectName, "cards"].join('/')
+    function cardsUri(projectName, areaName) {
+        return [baseUri, "api/projects", projectName, areaName, "cards"].join('/')
     }
 
     function normalizeBaseUrl() {

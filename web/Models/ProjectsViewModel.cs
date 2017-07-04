@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Skeleton.Web.Properties;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Skeleton.Web.Properties;
 
 namespace Skeleton.Web.Models
 {
@@ -13,10 +13,15 @@ namespace Skeleton.Web.Models
         }
 
         public IEnumerable<string> Projects { get; set; }
+        public IEnumerable<string> Areas { get; set; }
 
         [DisplayName("Project Name")]
         [Required]
         public string SelectedProject { get; set; }
+
+        [DisplayName("Area Name")]
+        [Required]
+        public string SelectedArea { get; set; }
 
         public string ErrorMessage { get; set; }
         public bool HasError { get; set; }

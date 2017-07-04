@@ -17,21 +17,21 @@ describe("The map view model", function () {
             spyOn(toastr, 'success').and.callFake(function () { });
             spyOn(console, 'log').and.callFake(function () { });
             _model.isDirty(true);
-            _model.load('yeah yeah');
+            _model.load('yeah yeah', 'what');
         });
 
         it("calls the cards API with the project name", function () {
             var depth;
-            expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah', depth);
+            expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah', 'what', depth);
         });
 
         describe("when loaded with a depth", function () {
             beforeEach(function () {
-                _model.load('yeah yeah', 17);
+                _model.load('yeah yeah', 'what', 17);
             });
 
             it("calls the cards API with the project name and the depth", function () {
-                expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah', 17);
+                expect(_api.cards.GET).toHaveBeenCalledWith('yeah yeah', 'what', 17);
             });
         });
 
@@ -154,7 +154,7 @@ describe("The map view model", function () {
             });
 
             it("puts to the cards API", function () {
-                expect(_api.cards.PUT).toHaveBeenCalledWith('yeah yeah', _model.cards());
+                expect(_api.cards.PUT).toHaveBeenCalledWith('yeah yeah', 'what', _model.cards());
             });
 
             describe("given the API call fails", function () {

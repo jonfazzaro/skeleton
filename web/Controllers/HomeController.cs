@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Skeleton.Web.Cards;
+﻿using Skeleton.Web.Cards;
 using Skeleton.Web.Models;
 using Skeleton.Web.Properties;
 using Skeleton.Web.State;
+using System;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Skeleton.Web.Controllers
 {
@@ -30,7 +30,8 @@ namespace Skeleton.Web.Controllers
         }
 
         [Route("map/{projectName}")]
-        public ActionResult Map(string projectName, int depth = 0)
+        [Route("map/{projectName}/{areaName}")]
+        public ActionResult Map(string projectName, string areaName = null, int depth = 0)
         {
             if (_provider.Session == null)
                 return RedirectToAction("signin");
@@ -38,7 +39,7 @@ namespace Skeleton.Web.Controllers
             if (string.IsNullOrWhiteSpace(projectName))
                 return RedirectToAction("projects");
 
-            return View(MapViewModel(projectName, depth));
+            return View(MapViewModel(projectName, areaName, depth));
         }
 
         [Route("projects")]
@@ -52,12 +53,37 @@ namespace Skeleton.Web.Controllers
 
         [Route("projects")]
         [HttpPost]
-        public ActionResult Projects(ProjectsViewModel model)
+        public async Task<ActionResult> Projects(ProjectsViewModel model)
         {
-            if (string.IsNullOrWhiteSpace(model.SelectedProject))
-                return View(model);
+            if (!HasASelectedProject(model))
+                return View(WithProjects(model));
 
-            return Redirect(MapUrl(model.SelectedProject));
+            if (!HasASelectedArea(model))
+                return View(WithProjects(await WithAreas(model)));
+
+            return Redirect(MapUrl(model.SelectedProject, model.SelectedArea));
+        }
+
+        private ProjectsViewModel WithProjects(ProjectsViewModel model)
+        {
+            model.Projects = _provider.Session.Projects;
+            return model;
+        }
+
+        private async Task<ProjectsViewModel> WithAreas(ProjectsViewModel model)
+        {
+            model.Areas = await _projects.GetAreaNames(model.SelectedProject);
+            return model;
+        }
+
+        private static bool HasASelectedArea(ProjectsViewModel model)
+        {
+            return !string.IsNullOrWhiteSpace(model.SelectedArea);
+        }
+
+        private static bool HasASelectedProject(ProjectsViewModel model)
+        {
+            return !string.IsNullOrWhiteSpace(model.SelectedProject);
         }
 
         [Route("signin")]
@@ -106,17 +132,18 @@ namespace Skeleton.Web.Controllers
                 await _projects.GetProjectPriorityFieldNames(_provider.Session.Projects);
         }
 
-        private static string MapUrl(string projectName)
+        private static string MapUrl(string projectName, string areaName)
         {
-            return "map/" + projectName.ToLower();
+            return $"map/{projectName}/{areaName}".ToLower();
         }
 
-        private MapViewModel MapViewModel(string projectName, int depth)
+        private MapViewModel MapViewModel(string projectName, string areaName, int depth)
         {
             return new MapViewModel
             {
                 Title = projectName,
                 ProjectName = projectName,
+                AreaName = areaName,
                 BaseUrl = _provider.Session.Url,
                 Depth = depth
             };
@@ -124,10 +151,7 @@ namespace Skeleton.Web.Controllers
 
         private ProjectsViewModel ProjectsViewModel()
         {
-            return new ProjectsViewModel
-            {
-                Projects = _provider.Session.Projects
-            };
+            return WithProjects(new ProjectsViewModel());
         }
 
         private void StartSession(SignInViewModel model)

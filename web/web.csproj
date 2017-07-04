@@ -269,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\CardsController.cs" />
+    <Compile Include="Api\HandleExceptionAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
