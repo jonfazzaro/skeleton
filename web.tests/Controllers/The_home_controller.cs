@@ -9,6 +9,7 @@
     using State;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
 
@@ -17,8 +18,8 @@
     {
         private static ISessionProvider _sessionProvider;
         private static HomeController _controller;
-        private static IEnumerable<string> _projectNames = new List<string> { "Hector", "Projector", "Ribbon Reflector", "A Picture of Nectar" };
-        private static IEnumerable<string> _areaNames = new List<string> { "Larry", "Moe", "Shemp" };
+        private static IEnumerable<string> _projectNames = new List<string> { "Hector", "Projector", "Ribbon Reflector", "A Picture of Nectar" }.OrderBy(a => a);
+        private static IEnumerable<string> _areaNames = new List<string> { "Larry", "Moe", "Shemp" }.OrderBy(a => a);
         private const string _tfsUrl = "https://my.tfs.collection/word";
         private static Mock<ICardsClient> _cardsClientMock;
         private static Mock<IProjectsClient> _projectsClientMock;

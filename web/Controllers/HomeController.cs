@@ -3,6 +3,7 @@ using Skeleton.Web.Models;
 using Skeleton.Web.Properties;
 using Skeleton.Web.State;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -66,13 +67,13 @@ namespace Skeleton.Web.Controllers
 
         private ProjectsViewModel WithProjects(ProjectsViewModel model)
         {
-            model.Projects = _provider.Session.Projects;
+            model.Projects = _provider.Session.Projects.OrderBy(p => p);
             return model;
         }
 
         private async Task<ProjectsViewModel> WithAreas(ProjectsViewModel model)
         {
-            model.Areas = await _projects.GetAreaNames(model.SelectedProject);
+            model.Areas = (await _projects.GetAreaNames(model.SelectedProject)).OrderBy(a => a);
             return model;
         }
 
